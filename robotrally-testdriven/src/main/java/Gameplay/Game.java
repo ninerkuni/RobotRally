@@ -6,6 +6,9 @@ import Elements.Robot;
 
 public class Game {
 	ArrayList<Robot> robots = new ArrayList<Robot>();
+	private boolean multiplayer;
+	
+	private String[] difficulties = {"EASY","MEDIUM","HARD"};
 	
 	
 	public boolean isFinished() {
@@ -15,6 +18,15 @@ public class Game {
 	public void addRobot(Robot robot) {
 		robots.add(robot);
 		
+	}
+
+	public void setMultiplayer(boolean b) {
+		multiplayer = b;
+		
+	}
+
+	public String[] getDifficulties() {
+		return difficulties;
 	}
 	
 }

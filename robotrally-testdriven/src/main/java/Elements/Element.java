@@ -41,9 +41,8 @@ abstract public class Element {
 	
 	abstract int effect(int x);
 	
-	public Coordinates move(Robot robot) {
-		Coordinates coordinates = new Coordinates(robot.next_x(),robot.next_y());
-		return coordinates;
+	public void move(Robot robot) {
+		return;
 	}
 	
 	public int getID(){

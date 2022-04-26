@@ -96,4 +96,11 @@ public class Coordinates {
 		int dy = Math.abs(this.gety()-c.gety());
 		return (int) Math.sqrt(dx*dx+dy*dy);
 	}
+
+	public void setRandom(int dimensions) {
+		int x = (int) (dimensions*Math.random());
+		int y = (int) (dimensions*Math.random());
+		
+		this.set(x, y);
+	}
 }

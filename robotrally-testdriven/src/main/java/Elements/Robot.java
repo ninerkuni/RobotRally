@@ -104,7 +104,7 @@ public class Robot extends Element {
 	
 	public String hit(Element e) {
 		score += e.effect(score);
-		coordinates = e.move(this);
+		e.move(this);
 		e.reset(this);
 		return e.message();
 	}
@@ -168,16 +168,18 @@ public class Robot extends Element {
 	}
 	
 	public boolean moved() {
-		return move(validMove());
+		return move(new Coordinates(next_x(),next_y()));
 	}
 	
 	//move from the element class, could be used to make one robot push another
 	@Override
-	public Coordinates move(Robot robot) {
+	public void move(Robot robot) {
 		Coordinates coordinates = robot.coordinates;
-		coordinates.movey(2*((robot.getOrientation()-2)%2));
-		coordinates.movex(2*(-(robot.getOrientation()-3)%2));
-		return coordinates;
+		for(int i = 0; i < 3;i++) {
+			coordinates.movey((robot.getOrientation()-2)%2);
+			coordinates.movex(-(robot.getOrientation()-3)%2);
+			robot.move(coordinates);
+		}
 		
 	}
 	
@@ -212,6 +214,18 @@ public class Robot extends Element {
 	public boolean winner() {
 		if(checkCount == board.getCheck()) return true;
 		else return false;
+	}
+
+	public boolean move(Coordinates coordinates) {
+		if(possibleMove(coordinates.getx(),coordinates.gety())) {
+			setCoordinates(coordinates);
+			if(!board.isEmpty(coordinates)) {
+				Element e = board.getElement(coordinates);
+				hit(e);
+			}
+		}
+		return(getCoordinates() == coordinates);
+		
 	}
 
 

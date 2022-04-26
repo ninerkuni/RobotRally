@@ -4,6 +4,8 @@ import Board.Board;
 
 public class Checkpoint extends Element{
 	
+	
+	
 	public Checkpoint(int id) {
 		ID = id;
 	}
@@ -27,7 +29,6 @@ public class Checkpoint extends Element{
 			robot.setScore(robot.getScore()+5);
 		}
 		robot.setCheckCount(robot.getCheckCount()+1);
-		visited = true;
 	}
 	
 	public void move(Robot robot, Board board) {

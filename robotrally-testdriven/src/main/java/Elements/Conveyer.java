@@ -7,10 +7,10 @@ public class Conveyer extends Obstacle{
 	}
 
 	@Override
-	public Coordinates move(Robot robot) {
+	public void move(Robot robot) {
 		Coordinates coordinates = robot.coordinates;
 		coordinates.movex(3);
-		return coordinates;
+		robot.move(coordinates);
 	}
 	
 
