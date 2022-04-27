@@ -225,5 +225,6 @@ public class StepsDefinition {
 	public void robot_is_at_new_coordinates() {
 	    assertEquals(coordinates,robot.getCoordinates());
 	}
+	//
 	
 }
