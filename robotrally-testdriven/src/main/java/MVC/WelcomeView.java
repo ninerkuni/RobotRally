@@ -261,9 +261,6 @@ class WelcomeView extends View {
 		JButton button = new JButton(level);
 		button.addActionListener(
 						e -> {	controller.setDifficulty(level);
-//								difficulty = level;
-//								resume = false;
-//								done = true
 								controller.updateView();
 								rally.dispose();});
 		c = titleRow(c,row);

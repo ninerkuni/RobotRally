@@ -5,9 +5,9 @@ import javax.swing.*;
 public class MVCpattern {
 	public static void main(String[] args) {
 		
-		//Controller controller = new Controller();
+		Controller controller = new Controller();
 
-		View board = new BoardView();
+//		View board = new BoardView();
 	}
 
 }

@@ -51,44 +51,7 @@ public class Controller {
 		}
 		initiateView();
 		step++;
-//		System.out.println("view is updating...");
-//		//if the welcome view is still running, loop through the parameters
-//		if(view instanceof WelcomeView) {
-//			WelcomeView welcomeview = (WelcomeView)view;
-//			System.out.println("We are at step: welcome");
-//		while(!welcomeview.isDone()) {
-//			try{Thread.sleep(500);}catch(InterruptedException e){updateView();;}
-//		}
-//		if(welcomeview.isDone()) {
-//			System.out.println("set-up is completed!");
-//			if(welcomeview.isNewGame()) {
-//					System.out.println("a new game should be started");
-//					String difficulty = welcomeview.getDifficulty();
-//
-//					boolean single = welcomeview.isSingle();
-//					ArrayList<String> robots = welcomeview.getRobots();
-//
-//				if(single) {
-//						String robotName = robots.get(0);
-//						model = new Model(robotName,difficulty);
-//					}
-//				else {
-//						String robotName1 = robots.get(0);
-//						String robotName2 = robots.get(1);
-//						model = new Model(robotName1,robotName2,difficulty);
-//					}
-//
-//				view = new NewGameView();
-//
-//				}
-//
-//			else {
-//					System.out.println("an old game should be loaded");
-//					view = new SavedGameView();
-//				}
-//			}
-//		}
-		
+
 		
 	}
 
