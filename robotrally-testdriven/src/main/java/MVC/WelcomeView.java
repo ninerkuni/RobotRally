@@ -28,7 +28,7 @@ class WelcomeView extends View {
 	private boolean allNames;
 	private String difficulty;
 	
-	private ArrayList<String> robots = new ArrayList<String>();
+	private ArrayList<String> robots;
 	
 	JButton mainMenu = new JButton("Back to Menu");
 	
@@ -100,7 +100,7 @@ class WelcomeView extends View {
 	}
 	
 	private void newGame() {
-		resume = false;
+		controller.setGameResume(false);
 		rally.repaint();
 		int row = 0;
 		
@@ -117,7 +117,6 @@ class WelcomeView extends View {
 		singlePlayer.addActionListener(
 				e ->{
 					System.out.println("single player");
-					single = false;
 					controller.setSingle(true);
 					names();
 				}	
@@ -129,7 +128,6 @@ class WelcomeView extends View {
 		multiPlayer.addActionListener(
 				e ->{
 					System.out.println("multiplayer");
-					single = false;
 					controller.setSingle(false);
 					names();
 				}	
@@ -145,9 +143,8 @@ class WelcomeView extends View {
 	}
 	
 	private void resumeGame() {
-		single = false;
-		resume = true;
-		done = true;
+		controller.setGameResume(true);
+		controller.updateView();
 		rally.dispose();
 	}
 	
@@ -264,9 +261,10 @@ class WelcomeView extends View {
 		JButton button = new JButton(level);
 		button.addActionListener(
 						e -> {	controller.setDifficulty(level);
-								difficulty = level;
-								resume = false;
-								done = true;
+//								difficulty = level;
+//								resume = false;
+//								done = true
+								controller.updateView();
 								rally.dispose();});
 		c = titleRow(c,row);
 		c.ipady = 30;

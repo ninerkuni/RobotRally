@@ -13,10 +13,12 @@ public class Model {
 	private ArrayList<String> robots;
 	private Game game;
 	private GameStart start = new GameStart();
+
+	private boolean resume;
 	
 	//constructor for new game
 	public Model() {
-		
+		robots = new ArrayList<String>();
 	}
 	
 	public Model(String robotName, String difficulty) {
@@ -61,5 +63,21 @@ public class Model {
 
 	public boolean allNames() {
 		return (start.getAmountofPlayers() == robots.size());
+	}
+
+	public boolean resumeGame() {
+		return resume;
+	}
+
+	public void setResumeGame(boolean b) {
+		resume = b;
+		if(b) {
+			game = loadGame();
+		}
+	}
+
+	private Game loadGame() {
+		//yet to be implemented
+		return new Game();
 	}
 }

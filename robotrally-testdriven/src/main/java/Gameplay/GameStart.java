@@ -87,5 +87,8 @@ public class GameStart {
 		// TODO Auto-generated method stub
 		return board;
 	}
-    
+
+    public int getAmountofPlayers() {
+		return amountOfPlayers;
+    }
 }
