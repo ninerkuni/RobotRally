@@ -119,8 +119,8 @@ public class Robot extends Element {
 	public void move(Robot robot) {
 		Coordinates coordinates = new Coordinates(getCoordinates().getx(),getCoordinates().gety());
 		for(int i = 0; i < 2;i++) {
-			coordinates.movey(-(orientation-1)%2);
-			coordinates.movex((orientation-2)%2);
+			coordinates.movey(-(robot.getOrientation()-1)%2);
+			coordinates.movex((robot.getOrientation()-2)%2);
 			robot.move(coordinates);
 		}
 		

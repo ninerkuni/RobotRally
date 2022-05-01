@@ -118,7 +118,8 @@ public class Hand {
 		return capacity;
 	}
 
-	public void place(Card card, int i) {
+	// set po
+	public void setPosition(Card card, int i) {
 		int old = getPosition(card);
 		if(i >= capacity) return;
 		if (order[i] == null) {
