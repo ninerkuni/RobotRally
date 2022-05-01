@@ -1,7 +1,5 @@
 package Player;
 
-import java.util.Scanner;
-
 import Elements.Robot;
 
 public class Player{
@@ -18,15 +16,15 @@ public class Player{
 	
 	public Player(Robot robot) {
 		this.robot = robot;
-//		hand = new Hand(5);
+		hand = new Hand(5);
 	}
 	
 	
-	public void play() {
-		if(!hand.isOrdered()) {
-			hand.orderRandom();
-		}
-		hand.play(robot);
+	public String play() {
+//		if(!hand.isOrdered()) {
+//			hand.orderRandom();
+//		}
+		return hand.play(robot);
 	}
 	
 //	public void order() {
@@ -75,10 +73,10 @@ public class Player{
 	}
 
 
-	public void orderRandom() {
-		hand.orderRandom();
-		
-	}
+//	public void orderRandom() {
+//		hand.orderRandom();
+//
+//	}
 
 
 	public boolean emptyHand() {
@@ -114,8 +112,28 @@ public class Player{
 //		
 //	}
 
-	public void printHand() {
-		System.out.println(hand.print());
-		
+//	public void printHand() {
+//		System.out.println(hand.print());
+//
+//	}
+
+	public String[] getTitles() {
+		return hand.getTitles();
+	}
+
+	public Hand getHand(){
+		return hand;
+	}
+
+    public int getScore() {
+		return robot.getScore();
+    }
+
+	public int getCheckpoints() {
+		return robot.getCheckCount();
+	}
+
+	public Robot getRobot() {
+		return robot;
 	}
 }

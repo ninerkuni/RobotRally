@@ -8,10 +8,11 @@ public class Pit extends Obstacle{
 	public String message() {
 		return "Pit";
 	}
-	@Override
-	public void reset(Robot robot) {
-		robot.reset();
 
+	//method refer to method for reseting robot
+	@Override
+	public void move(Robot robot) {
+		robot.reset();
 	}
 	@Override
 	public Pit construct() {

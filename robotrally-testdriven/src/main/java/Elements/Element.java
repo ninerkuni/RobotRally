@@ -34,15 +34,17 @@ abstract public class Element {
 	}
 	
 //	abstract void move(Robot r, Board b);
-	
-	abstract String message();
-	
+	//method used for overwriting in subclasses
+	public abstract String message();
+
 
 	
 	abstract int effect(int x);
-	
+
+	//method used for overwriting in subclasses
 	public void move(Robot robot) {
-		return;
+//		Coordinates coordinates = new Coordinates(getCoordinates().getx(),getCoordinates().gety());
+//		robot.move(coordinates);
 	}
 	
 	public int getID(){
@@ -54,20 +56,10 @@ abstract public class Element {
 //	}
 	
 
-	
-	public void reset(Robot robot) {
-	}
-	
+	//function used for gear, to set rotation
 	public void setLeft(boolean left) {
 		
 	}
-	
-	public void setVisited(boolean v) {
-		visited = v;
-	}
-	
-	public boolean getVisited() {
-		return visited;
-	}
+
 	
 }

@@ -32,8 +32,8 @@ class WelcomeView extends View {
 	
 	JButton mainMenu = new JButton("Back to Menu");
 	
-	public WelcomeView() {
-		super();
+	public WelcomeView(Controller controller) {
+		super(controller);
 		mainMenu.addActionListener(
 				e ->{welcome();});
 		welcome();
@@ -145,7 +145,6 @@ class WelcomeView extends View {
 	private void resumeGame() {
 		controller.setGameResume(true);
 		controller.updateView();
-		rally.dispose();
 	}
 	
 	private void askForName(int row) {
@@ -169,9 +168,9 @@ class WelcomeView extends View {
 							JLabel success = new JLabel("Robot "+controller.getLastName()+" added!");
 							success.setHorizontalAlignment(SwingConstants.CENTER);
 							success.setForeground(Color.WHITE);
-							panel.add(success,titleRow(c,row));
+							panel.add(success, titleRow(c, row));
+
 						}
-					
 				}	
 				);
 		panel.add(named,rowRight(c,row));
@@ -261,8 +260,7 @@ class WelcomeView extends View {
 		JButton button = new JButton(level);
 		button.addActionListener(
 						e -> {	controller.setDifficulty(level);
-								controller.updateView();
-								rally.dispose();});
+								controller.updateView();});
 		c = titleRow(c,row);
 		c.ipady = 30;
 		panel.add(button,c);

@@ -2,7 +2,7 @@ package Board;
 
 import java.util.ArrayList;
 
-import Elements.Obstacle;
+import Elements.*;
 
 public class ObstacleFactory {
 	private ArrayList<Obstacle> obstacles;
@@ -12,7 +12,7 @@ public class ObstacleFactory {
 	
 	public Obstacle pick() {
 		if(!(obstacles.isEmpty())) {
-			int rand = obstacles.size() * ((int) Math.random());
+			int rand = (int) (obstacles.size() * Math.random());
 			return obstacles.get(rand).construct();
 		}
 		else return null;
@@ -30,5 +30,16 @@ public class ObstacleFactory {
 
 	public boolean contains(Obstacle e) {
 		return obstacles.contains(e);
+	}
+	//gives default obstacles to list
+	public void defaultFill() {
+		Obstacle o = new Pit();
+		this.add(o);
+		o = new Gear();
+		add(o);
+		o = new Conveyer();
+		add(o);
+		o = new Trampoline();
+		add(o);
 	}
 }

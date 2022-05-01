@@ -17,41 +17,22 @@ public class Board {
 	private int numRobots;
 	private int dimensions;
 	private int counter = 0;
+	private Random rnd = new Random();
+	private static Board board = null;
+	private static ArrayList<Element> elements;
+	// getter for all the elements on the board
+	public ArrayList<Element> getElementsOnBoard(){
+		return elements;}
 
-//	private class StorageElement{
-//		private int index;
-//		Element element;
-//		public StorageElement(int index, Element e) {
-//			this.index = index;
-//			this.element = e;
-//		}
-//		
-////		@Override
-////	    public boolean equals(Object obj) {
-////	    	if (obj == null) {
-////	            return false;
-////	        }
-////
-////	        if (obj.getClass() != this.getClass()) {
-////	            return false;
-////	        }
-////
-////	        final StorageElement element = (StorageElement) obj;
-////	        if(this.element == null || element.element == null || this.element.coordinates== null || element.element.coordinates == null) {
-////	        	return false;
-////	        }
-////	        
-////	        return (this.element.coordinates==element.element.coordinates);
-////	    }
-//	}
-
-	
-	private ArrayList<Element> elements;
-	ArrayList<Integer> xcoordinates;
-	ArrayList<Integer> ycoordinates;
-	
-	
-	
+	//method for initiating board as a singleton
+	public static Board getBoard() {
+		if(board == null) {
+			board = new Board();
+		} else {
+			elements = new ArrayList<>();
+		}
+		return board;
+	}
 
 	
 	public Board(int cols) {
@@ -61,8 +42,9 @@ public class Board {
 	
 	
 	public Board() {
+		System.out.println("Board initiated");
 		dimensions = 8;
-		elements = new ArrayList<Element>();
+		elements = new ArrayList<>();
 	}
 
 	public int getDimensions() {
@@ -82,7 +64,7 @@ public class Board {
 		
 		//checkpoints are handled
 		Checkpoint c;
-		for(int i = 0; i < numCheckpoints; i++) {
+		for(int i = 0; i <= numCheckpoints; i++) {
 			c = new Checkpoint(i);
 			addRandom(c);
 		}
@@ -95,7 +77,15 @@ public class Board {
 		}
 
 	}
-	
+
+//	JPanel board = new JPanel();
+//	board.add(new ImageIcon("resources/Cards/ASH.png"))
+//JPanel Robot1_W = new JPanel();
+//	BufferedImage Picture = ImageIO.read(new File("Cards/ASH_W.png"));
+//	JLabel picLabel = new JLabel(new ImageIcon(Picture));
+//      Robot1_W.add(picLabel);
+
+	//multiplayer setup
 	public void setUp(Robot robot1, Robot robot2, int obs, int check, ObstacleFactory factory) {
 		numObstacles = obs;
 		numCheckpoints = check;
@@ -104,6 +94,7 @@ public class Board {
 		
 		//robots are handled
 		robot1.setStart(0, 0);
+		robot1.setOrientation(2);
 		robot2.setStart(dimensions-1, dimensions-1);
 		add(robot1);
 		add(robot2);
@@ -123,16 +114,11 @@ public class Board {
 		}
 
 	}
-	
-	
-	
-	
-	public void setUp(Robot robot) {
-		ObstacleFactory factory = new ObstacleFactory();
-//		factory.add(new Obstacle());
-		this.setUp(robot, 0, 2,factory);
-	}
-	
+
+	//used in loadGame for loading in checkpoint
+	public void setCheck(int c){ numCheckpoints = c;}
+
+	//used for checking winner and saving the board
 	public int getCheck() {
 		return numCheckpoints;
 	}
@@ -152,17 +138,13 @@ public class Board {
 		int x = (int) (dimensions*Math.random());
 		int y = (int) (dimensions*Math.random());
 		Coordinates c = new Coordinates(x,y);
-		while(true) {
-			if(isEmpty(c)) {
-				e.setCoordinates(c);
-				add(e);
-				break;
-			}
-			else {
-				x = (int) (dimensions*Math.random());
-				y = (int) (dimensions*Math.random());
-			}
+		while(!isEmpty(c)) {
+			x = (int) (dimensions*Math.random());
+			y = (int) (dimensions*Math.random());
+			c.set(x,y);
 		}
+		e.setCoordinates(c);
+		add(e);
 		
 	}
 
@@ -173,13 +155,16 @@ public class Board {
 	public void setUp(Robot robot, int checkpoints) {
 		ObstacleFactory factory = new ObstacleFactory();
 		setUp(robot,0,checkpoints,factory);
-		
+
 	}
 
 	public int getElements() {
 		return elements.size();
 	}
 
+	//public ArrayList<Element> getElementList() {return elements;}
+
+	//checks if element is on coordinate
 	public Element getElement(Coordinates c) {
 		return (elements.stream().filter(o -> o.getCoordinates().equals(c)).findFirst().orElse(null));
 	}
@@ -199,8 +184,10 @@ public class Board {
 		
 	}
 
+	//used in SaveGame to save number of robots
+	public int getNumObstacles() {
+		return numObstacles;
+	}
 
 
-	
-	
 }

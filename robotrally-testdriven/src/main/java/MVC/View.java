@@ -1,27 +1,13 @@
 package MVC;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
-import javax.swing.UIManager;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
-
-import GUI.ResumeFrame;
-import GUI.StartFrame;
 
 class setDefaultFont{
 	static void setFont(FontUIResource myFont) {
@@ -78,6 +64,7 @@ public class View {
 	JPanel panel;
 	GridBagConstraints c;
 
+	String path = "src/main/";
 	Controller controller;
 
 	GridBagConstraints rowRight (GridBagConstraints c,int row) {
@@ -126,8 +113,208 @@ public class View {
 		
 		return c;
 	}
-	
-	
+	 GridBagConstraints row(GridBagConstraints c,int row){
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipady = 5;
+		c.gridwidth = 1;
+		c.weightx = 0.5;
+		c.insets = new Insets(0,10,0,10);
+		c.gridx = 0;
+		c.gridy = row;
+		return c;
+	}
+
+	public void showWarning(String s) {
+		JFrame warning = new JFrame();
+		JOptionPane.showMessageDialog(warning, s ,"warning",
+				JOptionPane.PLAIN_MESSAGE);;
+
+	}
+
+	public void dispose() {
+		rally.dispose();
+	}
+
+	public void update() {
+		System.out.println("View updated");
+	}
+
+	public void updateCards() {
+	}
+
+	public void nextRound() {
+
+	}
+
+	public void showScore(boolean exit) {
+		int row = 0;
+		JFrame round = new RallyFrame("Round statistics");
+		JPanel display = new DisplayPanel();
+
+
+		JButton close = new JButton("Continue");
+		close.addActionListener(
+				e-> {
+					round.dispose();
+				}
+		);
+		JButton Exit = new JButton("Exit");
+		Exit.addActionListener(
+				e-> {
+					exitWindow();
+					round.dispose();
+				}
+		);
+
+		Exit.setVisible(exit);
+
+
+
+
+		JLabel player = new JLabel("Statistics for "+(controller.getActiveName()));
+		player.setFont(new Font("Orange Kid", Font.BOLD, 50));
+		player.setForeground(Color.WHITE);
+		display.add(player,titleRow(c,row));
+		row++;
+
+		JLabel score = new JLabel("Score: "+ controller.getScore());
+		display.add(score,rowLeft(c,row));
+
+		JLabel checkpoints = new JLabel("Checkpoint counter: "+controller.getCheckpointCounter());
+		display.add(checkpoints,rowRight(c,row));
+		row++;
+
+		try{
+			BufferedImage Picture = ImageIO.read(new File(path+"resources/Cards/PokemonPicGUI.png"));
+			JLabel illustration = new JLabel(new ImageIcon(Picture));
+
+			display.add(illustration,titleRow(c,row));
+			row++;
+
+		}
+		catch (IOException e){
+			showWarning("Image couldn't be found!");
+		}
+
+
+
+		display.add(close,rowLeft(c,row));
+		display.add(Exit,rowRight(c,row));
+		round.add(display);
+		round.setVisible(true);
+		round.pack();
+
+	}
+
+	private void exitWindow() {
+		int row = 0;
+		JFrame round = new ScoreFrame("Exit Game");
+		JPanel display = new DisplayPanel();
+
+		JButton close = new JButton("Resume Game");
+		close.addActionListener(
+				e-> {
+					round.dispose();
+				}
+		);
+		JButton saveExit = new JButton("Save and Exit");
+		saveExit.addActionListener(
+				e-> {
+					controller.saveGame();
+					rally.dispose();
+					round.dispose();
+				}
+		);
+		JButton Exit = new JButton("Exit");
+		close.addActionListener(
+				e-> {
+					rally.dispose();
+					round.dispose();
+				}
+		);
+
+		display.add(close,titleRow(c,row));
+		row++;
+		display.add(saveExit,titleRow(c,row));
+		row++;
+		display.add(Exit,titleRow(c,row));
+		row++;
+		round.add(display);
+		round.pack();
+
+	}
+
+
+
+	public void updateStatistics() {
+
+	}
+
+	public void addStats(String name, int[] stats) {
+
+
+
+
+	}
+
+	public void winner() {
+		JFrame winner = new RallyFrame("Game is finished");
+		winner.setLayout(new GridBagLayout());
+		JPanel winnerPanel = new DisplayPanel();
+
+		JLabel winningRobot = new JLabel("Congrats "+controller.getWinner()+ ", you won!!");
+
+		try{
+			BufferedImage Picture = ImageIO.read(new File(path+"resources/Cards/PokemonPicGUI.png"));
+			JLabel illustration = new JLabel(new ImageIcon(Picture));
+
+			winnerPanel.add(winningRobot,titleRow(c,0));
+			winnerPanel.add(illustration,titleRow(c,1));
+
+			JButton exitButton = new JButton("Exit");
+			exitButton.addActionListener(
+					e->{
+						System.exit(0);
+					}
+			);
+
+			winnerPanel.add(exitButton,mainMenu(c,2));
+			winner.add(winnerPanel);
+
+			winner.setVisible(true);
+			winner.pack();
+		}
+		catch (IOException e){
+			System.exit(0);
+		}
+
+	}
+
+
+
+	class DisplayPanel extends JPanel{
+		public DisplayPanel(){
+			super();
+			setBackground(new Color(-16143860));
+			setForeground(Color.WHITE);
+			setLayout(new GridBagLayout());
+		}
+
+
+	}
+
+
+
+	class ScoreFrame extends JFrame{
+		public ScoreFrame(String title){
+			super(title);
+			setPreferredSize(new Dimension(300,300));
+			setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+			setVisible(true);
+
+		}
+	}
+
 	class RallyFrame extends JFrame{
 		public RallyFrame(String title) {
 			super(title);
@@ -137,9 +324,12 @@ public class View {
 		}
 		    
 	}
-	
-	public View() {
-		rally = new RallyFrame("Robot Rally");
+
+
+
+	public View(Controller controller) {
+		this.controller = controller;
+		rally = new RallyFrame("Poké Rally");
 		
 		panel = new JPanel();
 		panel.setLayout(new GridBagLayout());
@@ -169,65 +359,8 @@ public class View {
 	    
 	}
 
-	public void setController(Controller controller){
-		this.controller = controller;
-	}
 
-//	public void updateView(int step) {
-//		if(step == 0) {
-//			
-//			JLabel welcome = new JLabel("Welcome to Robot Rally!!!");
-//			welcome.setHorizontalAlignment(SwingConstants.CENTER);
-//			welcome.setFont(new Font("Orange Kid", Font.BOLD, 50));
-//			welcome.setForeground(Color.WHITE);
-//			
-//			
-//			panel.add(welcome,BorderLayout.NORTH);
-//			
-//			
-//			JButton newGame = new JButton("New Game");
-//			newGame.addActionListener(
-//					e ->{
-//						single = true;
-////						StartFrame start = new StartFrame("start");
-////						start.setVisible(true);
-////						start.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//						frame.dispose();
-//					}	
-//					);
-//			panel.add(newGame,BorderLayout.CENTER);
-//			
-//			
-//			JButton resumeGame = new JButton("Resume Game");
-//			resumeGame.addActionListener(
-//					e ->{
-//						single = false;
-////						ResumeFrame resume = new ResumeFrame("resume");
-////						resume.setVisible(true);
-////						resume.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//						frame.dispose();
-//					}	
-//					);
-//			panel.add(resumeGame,BorderLayout.CENTER);
-//			
-//			
-//			
-//			
-//			rally.add(panel);
-//		}
-//		else if (step == 1) {
-//			if(display.isSingle()) {
-//				StartFrame start = new StartFrame("start");
-//				start.setVisible(true);
-//				start.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//			}
-//			else {
-//				ResumeFrame resume = new ResumeFrame("resume");
-//				resume.setVisible(true);
-//				resume.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//			}
-//		}
-//		
-//	}
+
+
 
 }

@@ -14,6 +14,8 @@ public class Robot extends Element {
 
 	private int orientation;
 
+	private String signature;
+
 
 	
 
@@ -39,12 +41,14 @@ public class Robot extends Element {
 //		direction = Direction.N;
 		orientation = 0;
 		score = 0;
-		coordinates = start;
+		System.out.print("Move to start ");
+		start.print();
+		move(start);
 	}
 	
 	public void setStart(int x, int y) {
 		start = new Coordinates(x,y);
-		coordinates = start;
+		coordinates = new Coordinates(x,y);
 	}
 	
 	public Coordinates getStart() {
@@ -64,20 +68,15 @@ public class Robot extends Element {
 	
 	public int next_x() {
 		int x = coordinates.getx();
-//		System.out.print(orientation);
-		return x-((orientation-3)%2);
-		
-//		if (direction == Direction.W) return x-1;
-//		else if (direction == Direction.E) return x+1;
-//		else return x;
+		System.out.println("next x:"+(x-((orientation-2)%2)));
+		return x-((orientation-2)%2);
+
 	}
 	
 	public int next_y() {
 		int y = coordinates.gety();
-		return y+((orientation-2)%2);
-//		if (direction == Direction.N) return y-1;
-//		else if (direction == Direction.S) return y+1;
-//		else return y;
+		System.out.println("next y:"+(y+((orientation-1)%2)));
+		return y+((orientation-1)%2);
 	}
 	
 
@@ -105,7 +104,6 @@ public class Robot extends Element {
 	public String hit(Element e) {
 		score += e.effect(score);
 		e.move(this);
-		e.reset(this);
 		return e.message();
 	}
 	
@@ -117,67 +115,18 @@ public class Robot extends Element {
 		score = i;
 	}
 	
-	public boolean validMove() {
-		return possibleMove(next_x(),next_y());
-	}
-	
-
-	
-	
-	
-	public boolean move(boolean valid) {
-		//re-implement the hit (because e.move() changes the coordinates, so hit() has to be after
-//		boolean moved = false;
-		if(valid) {
-			Coordinates next = new Coordinates(next_x(),next_y());
-			if(!board.isEmpty(next)){
-				Element e = board.getElement(next);
-				hit(e);
-//				System.out.println("hit element");
-			}
-			else {
-				setCoordinates(next_x(), next_y());
-//				System.out.println("Moved");
-			}
-//			if(board.checkSpot(next_x(), next_y())) {
-//				hit(next_x(),next_y());
-//				Element e = board.getElementSpot(next_x(), next_y());
-//				if(!e.isBarrier()) {
-//					setCoordinates(next_x(), next_y(), index);
-//					return true;
-//				}
-//				else return false;
-//			}
-//			else {
-			
-				return true;
-//			}
-			
-			
-		}
-		
-		else {
-//			System.out.println("Not possible to move");
-			return false;
-		}
-
-//		board.print();
-//		System.out.println(name + " moved!");
-		
-//		
-	}
-	
+	//the move method, initiates the process of moving a robot
 	public boolean moved() {
-		return move(new Coordinates(next_x(),next_y()));
+		return !move(new Coordinates(next_x(),next_y()));
 	}
 	
 	//move from the element class, could be used to make one robot push another
 	@Override
 	public void move(Robot robot) {
-		Coordinates coordinates = robot.coordinates;
-		for(int i = 0; i < 3;i++) {
-			coordinates.movey((robot.getOrientation()-2)%2);
-			coordinates.movex(-(robot.getOrientation()-3)%2);
+		Coordinates coordinates = new Coordinates(getCoordinates().getx(),getCoordinates().gety());
+		for(int i = 0; i < 2;i++) {
+			coordinates.movey(-(orientation-1)%2);
+			coordinates.movex((orientation-2)%2);
 			robot.move(coordinates);
 		}
 		
@@ -204,7 +153,7 @@ public class Robot extends Element {
 	}
 
 	public String message() {
-		return "Robot "+name;
+		return signature+(orientation);
 	}
 //	
 	public void setOrientation(int d) {
@@ -217,17 +166,36 @@ public class Robot extends Element {
 	}
 
 	public boolean move(Coordinates coordinates) {
+		System.out.println("Robot.move()");
 		if(possibleMove(coordinates.getx(),coordinates.gety())) {
-			setCoordinates(coordinates);
+			System.out.println("Possible move:");
+			coordinates.print();
+			System.out.println("Board is empty at next coordinates: "+board.isEmpty(coordinates));
 			if(!board.isEmpty(coordinates)) {
 				Element e = board.getElement(coordinates);
-				hit(e);
+				setCoordinates(coordinates.getx(),coordinates.gety());
+				System.out.println("Element hit :" +hit(e));
 			}
+			else{
+				setCoordinates(coordinates.getx(),coordinates.gety());
+			}
+
 		}
+		System.out.println("New coordinates robot:");
+		this.coordinates.print();
 		return(getCoordinates() == coordinates);
 		
 	}
 
+	//method used to return the name of the winner
+    public String getName() {
+		return name;
+    }
 
-	
+	//used for loading the game from text file
+	public void setSignature(String s) {
+		signature = s;
+	}
+
+
 }

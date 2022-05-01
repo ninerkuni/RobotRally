@@ -9,8 +9,8 @@ public class Gear extends Obstacle{
 	}
 	
 	@Override
-	public void reset(Robot robot) {
-		if(left) robot.turnL();
+	public void move(Robot robot) {
+		if (left) robot.turnL();
 		else robot.turnR();
 	}
 	

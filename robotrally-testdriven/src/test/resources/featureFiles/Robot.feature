@@ -137,3 +137,6 @@ Feature: Robot Scenarios
 			And random coordinates 
 			When robot is moved to coordinates
 			Then robot is at new coordinates
+
+			
+			#

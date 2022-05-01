@@ -3,39 +3,30 @@ package Elements;
 import Board.Board;
 
 public class Checkpoint extends Element{
-	
-	
-	
+
+	//constructor, initiated with ID so checkpoint has id when created
 	public Checkpoint(int id) {
 		ID = id;
 	}
 	
 	public int effect(int score) {
-//		int v;
-//		
-//		if(visited) v = 5;
-//		else v = 10;
-//		
-//		visited = true;
-//		return v;
 		return 0;
-		
 	}
-	public void reset(Robot robot) {
-		if (!visited && robot.getCheckCount() == ID-1) {
+	//overwritten method inherited from element, adds to the score and increase robot checkcounter
+	@Override
+	public void move(Robot robot){
+		if (robot.getCheckCount() == ID) {
+			System.out.println("it works!");
 			robot.setScore(robot.getScore()+10);
+			robot.setCheckCount(robot.getCheckCount()+1);
 		}
-		else if (visited && robot.getCheckCount() >= robot.getNumCheckpoints()) {
+		else if (robot.getCheckCount() > ID) {
 			robot.setScore(robot.getScore()+5);
 		}
 		robot.setCheckCount(robot.getCheckCount()+1);
 	}
-	
-	public void move(Robot robot, Board board) {
-		
-	}
-	
+	//overwritten method, used for saving to distinguish obstacles saved and loading
 	public String message() {
-		return "Checkpoint";
+		return "Checkpoint"+(ID+1);
 	}
 }

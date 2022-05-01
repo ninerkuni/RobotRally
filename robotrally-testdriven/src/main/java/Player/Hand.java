@@ -1,7 +1,5 @@
 package Player;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 //import java.util.stream.Collectors;
 
 import Elements.Robot;
@@ -58,9 +56,9 @@ public class Hand {
 		return capacity - cards.size();
 	}
 
-	public void setSpaces(int spaces) {
-		this.spaces = spaces;
-	}
+//	public void setSpaces(int spaces) {
+//		this.spaces = spaces;
+//	}
 
 	public void draw(Deck deck) {
 		cards.add(deck.draw());
@@ -70,13 +68,13 @@ public class Hand {
 		return cards.contains(card);
 	}
 
-	public String print() {
-		String str = "";
-		for (Card c : cards) {
-			str += "Title: "+c.getTitle() +" Action: "+ c.printActions()+"\n";
-		}
-		return str;
-	}
+//	public String print() {
+//		String str = "";
+//		for (Card c : cards) {
+//			str += "Title: "+c.getTitle() +" Action: "+ c.printActions()+"\n";
+//		}
+//		return str;
+//	}
 
 	public void fill(Deck deck) {
 		if (getSpaces() > 0) {
@@ -88,19 +86,20 @@ public class Hand {
 		
 	}
 
-	public boolean full() {
-		return (getSpaces() == 0);
-	}
+//	public boolean full() {
+//		return (getSpaces() == 0);
+//	}
+//
+//	public boolean space() {
+//		return (cards.size() <= capacity);
+//	}
+//
+//
+//	public int numCards() {
+//		return cards.size();
+//	}
 
-	public boolean space() {
-		return (cards.size() <= capacity);
-	}
-
-
-	public int numCards() {
-		return cards.size();
-	}
-
+	/*
 	public void add(Card card) {
 		//check that capacity won't be exceeded
 		if (cards.size() < capacity -1 ) cards.add(card);
@@ -131,15 +130,15 @@ public class Hand {
 			order[i] = card;
 			//careful with this one, cards just get shoved down in the order if a new card is inserted at their place
 			if(old < capacity) order[old] = c;
-			else place(c,i+1);
+		//	setPosition(c,i+1);
 		}
 		
 	}
-
-	public Card getCardPosition(int i) {
-		if(i >= capacity) return null;
-		return order[i];
-	}
+//
+//	public Card getCardPosition(int i) {
+//		if(i >= capacity) return null;
+//		return order[i];
+//	}
 
 	public void orderRandom() {
 		Collections.shuffle(cards);
@@ -156,11 +155,11 @@ public class Hand {
 
 	public boolean isOrdered() {
 		for(int i = 0; i < order.length; i++) {
-			if(order[i] != null) {
-				return true;
+			if(order[i] == null) {
+				return false;
 			}
 		}
-		return false;
+		return true;
 	}
 
 	public void play(Robot robot) {
@@ -171,39 +170,49 @@ public class Hand {
 		ordered(false);
 	}
 
-	public Card pickRandom() {
-		int rand = (int) (capacity*Math.random());
-		return cards.get(rand);
-	}
-
-	public Card getCard(int i) {
-		if(i >= capacity) return null;
-		return cards.get(i);
-	}
-
-	public int getCapacity() {
-		return capacity;
-	}
-
-	public boolean printOrder() {
-		boolean ordered = true;
-		for(Card c : order) {
-			if(c != null) c.printActions();
-			else ordered = false;
-		}
-		return ordered;
-		
-	}
-	
+//	public Card pickRandom() {
+//		int rand = (int) (capacity*Math.random());
+//		return cards.get(rand);
+//	}
+//
+//	public Card getCard(int i) {
+//		if(i >= capacity) return null;
+//		return cards.get(i);
+//	}
+//
+//	public int getCapacity() {
+//		return capacity;
+//	}
+//
+//	public boolean printOrder() {
+//		boolean ordered = true;
+//		for(Card c : order) {
+//			if(c != null) c.printActions();
+//			else ordered = false;
+//		}
+//		return ordered;
+//
+//	}
+//
 	public String[] getTitles() {
 		String[] titles = new String[capacity];
 		int i = 0;
 		for(Card c : cards) {
 			titles[i] = c.getTitle();
+			i++;
 		}
 		return titles;
 	}
-	
+
+	public Card findCard(String title){
+		return (cards.stream().filter(o -> o.getTitle().equals(title)).findFirst().orElse(null));
+	}
+
+	public Card getCard(int i) {
+		if (i >= capacity) return null;
+		return cards.get(i);
+	}
+
 //	public void order() {
 //		int ordered = 0;
 //		int 

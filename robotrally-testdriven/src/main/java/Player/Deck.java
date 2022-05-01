@@ -43,4 +43,40 @@ public class Deck {
 		cards.remove(card);
 		numCards --;
 	}
+
+	public void defaultDeck(){
+		ArrayList<Card.action> actions = new ArrayList<Card.action>();
+		//move
+		Card card = new Card("move1Forward");
+		actions.add(Card.action.move);
+		card.setAction(actions);
+		add(card);
+		//move2
+		actions = new ArrayList<Card.action>();
+		card = new Card("move2Forward");
+		actions.add(Card.action.move);
+		actions.add(Card.action.move);
+		card.setAction(actions);
+		add(card);
+		//turnLeft
+		actions = new ArrayList<Card.action>();
+		card = new Card("turnL");
+		actions.add(Card.action.turnL);
+		card.setAction(actions);
+		add(card);
+		//turnRight
+		actions = new ArrayList<Card.action>();
+		card = new Card("turnR");
+		actions.add(Card.action.turnR);
+		card.setAction(actions);
+		add(card);
+		//turn180
+		actions = new ArrayList<Card.action>();
+		card = new Card("turn180");
+		actions.add(Card.action.turnR);
+		actions.add(Card.action.turnR);
+		card.setAction(actions);
+		add(card);
+
+	}
 }
