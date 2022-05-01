@@ -1,0 +1,157 @@
+@tag
+  Feature: Gameplay as a Robot
+
+    @tag1
+    Scenario: Initiate Robot
+      Given a board
+      And a name "name"
+      When the game starts
+      Then robot is initiated
+
+#    @tag2
+#    Scenario: moving across the board
+#      Given a player card
+#      And a robot
+#      And move is valid
+#      When my turn to move
+#      Then I reach my destination
+#
+#    @tag3
+#    Scenario: changing orientation to move
+#      Given a player card
+#      And move is valid
+#      And robot hasn't moved yet
+#      When my turn to move
+#      Then Turn the robot
+#
+#    @tag4
+#    Scenario: interaction with Gear
+#      Given Gear coordinates A
+#      And I am on A
+#      When turn ends
+#      Then I change my orientation
+#
+#    @tag5
+#    Scenario: interaction with pit
+#      Given pit coordinates A
+#      When I am on A
+#      Then i can not move further this round
+#
+#    @tag6
+#    Scenario: interaction with checkpoint
+#      Given Checkpoint coordinates A
+#      And I am on A
+#      And this checkpoint is number N
+#      And my last visited checkpoint was N - 1
+#      When turn ends
+#      Then My player's score increases by 10
+#      And my checkpoint counter increments by 1
+#
+#    @tag7
+#    Scenario: interaction with conveyor
+#      Given conveyor coordinates A
+#      And I am on A
+#      When turn ends
+#      Then I move 1 in the conveyor's direction
+#
+#    @tag8
+#    Scenario: interaction with robot_B
+#      Given robot_B coordinates A
+#      And my next move is set to A
+#      When I attempt to make the move
+#      Then I do not move
+#      And my player's score decreases by 5
+#
+#    @tag9
+#    Scenario: interaction with goal
+#      Given the number of checkpoints is N
+#      And my checkpoint counter reads N
+#      When I visit goal
+#      Then my player wins
+
+ @tag3
+    Scenario: turn left from north
+    	Given a board
+    	And a robot on a board
+      And the board is set up 
+      And initial orientation is north
+      When robot turns left
+      Then final orientation is west
+    
+    @tag4
+    Scenario: turn left from west
+    	Given a board
+    	And a robot on a board
+      And the board is set up 
+      And initial orientation is west
+      When robot turns left
+      Then final orientation is south
+    
+    @tag4
+    Scenario: turn left from south
+     	Given a board
+    	And a robot on a board
+      And the board is set up 
+      And initial orientation is south
+      When robot turns left
+      Then final orientation is east
+      
+    @tag5
+    Scenario: turn left from east
+     	Given a board
+    	And a robot on a board
+      And the board is set up 
+      And initial orientation is east
+      When robot turns left
+      Then final orientation is north
+    
+    @tag6
+    Scenario: turn right from north
+     	Given a board
+    	And a robot on a board
+      And the board is set up 
+      And initial orientation is north
+      When robot turns right
+      Then final orientation is east
+    
+    @tag7
+    Scenario: turn right from east
+     	Given a board
+    	And a robot on a board
+      And the board is set up 
+      And initial orientation is east
+      When robot turns right
+      Then final orientation is south
+    
+    @tag8
+    Scenario: turn right from south
+     	Given a board
+    	And a robot on a board
+      And the board is set up 
+      And initial orientation is south
+      When robot turns right
+      Then final orientation is west
+      
+    @tag9
+    Scenario: turn right from west
+     	Given a board
+    	And a robot on a board
+      And the board is set up 
+      And initial orientation is west
+      When robot turns right
+      Then final orientation is north
+   @tag12
+    Scenario: hit gear
+    	Given a board
+    	And a robot on a board
+    	And the board is set up
+    	And robot score
+    	And a gear
+    	And gear turns left
+    	When robot hits gear
+    	Then robot turned left
+    	And the score is decreased
+    
+
+
+

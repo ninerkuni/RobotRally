@@ -238,6 +238,7 @@ public class GameView extends View{
         handPanel = new DisplayPanel();
         hand = new JLabel[controller.getCards().length];
 
+        //hand panel is initiated with jlabels containing placeholder icons
         hand = addPlaceholders(hand.length);
 
         paintCards(handPanel,hand);
@@ -250,6 +251,7 @@ public class GameView extends View{
 
     private void resetHand(){
         handPanel.removeAll();
+        //
         hand = addPlaceholders(hand.length);
         paintCards(handPanel,hand);
         handPanel.add(drawCards(),row(c,hand.length));
@@ -257,15 +259,6 @@ public class GameView extends View{
         panel.repaint();
 
     }
-
-//   public void popCard(int i){
-//        orderPanel.removeAll();
-//        if(i < order.length){
-//            order[i] = null;
-//        }
-//        paintCards(orderPanel,order);
-//        panel.repaint();
-//   }
 
     private void initiateOrder(){
         orderPanel = new DisplayPanel();
@@ -281,6 +274,7 @@ public class GameView extends View{
 
 
     private void paintCards(Container p, Container[] ls){
+        // method that returns a list of containers to a parent container
         p.removeAll();
         for(int i = 0; i < ls.length;i++){
             if(!(ls[i] == null)) p.add(ls[i],row(c,i));
@@ -289,7 +283,7 @@ public class GameView extends View{
         p.repaint();
     }
 
-    //update after every round!! otherwise game gets stuck!!! - done
+    //global counter variable to connect positions in hand and order, reset after every round
     private int counter = 0;
     private void setOrder(JLabel label){
         if(counter < order.length) {
@@ -303,10 +297,13 @@ public class GameView extends View{
     private void loadHand(){
         counter = 0;
         panel.remove(handPanel);
+        //load cards on hand from controller
         String[] cards = controller.getCards();
+        //clean hand[]
         hand = new JButton[cards.length];
         ImageIcon icon = new ImageIcon();
 
+        //substitute the placeholder labels with specific card buttons
         for(int i = 0; i < cards.length; i++){
             String title = cards[i];
             try {
@@ -320,14 +317,21 @@ public class GameView extends View{
             spot.setAlignmentX(Component.CENTER_ALIGNMENT);
             spot.addActionListener(
                     e->{
+                        //each button causes the connected card to be set to the position indicated by counter
+                        //first card clicked is set to position one, second position two...
                         controller.setCardToPosition(title,counter);
+                        //button is disabled after click
                         spot.setEnabled(false);
+                        //card icon is replaced by default positon placeholder
                         spot.setIcon(getPlaceholderImage(counter));
+                        //position indicated by counter in the order panel is updated accordingly
                         setOrder(label);
+                        //hand panel is repainted
                         paintCards(handPanel,hand);
                         counter++;
                     }
             );
+            //position in the container array hand is updated
             hand[i] = spot;
         }
 
@@ -339,23 +343,29 @@ public class GameView extends View{
 
     public void addStats(String name, int[] stats) {
         int row = 0;
-
+        //this method is called by the controller for each robot in the game
         DisplayPanel statistics = new DisplayPanel();
+
+        //JLabels for name, checkpoint counter and score are created
         JLabel n = new JLabel(name);
         JLabel s = new JLabel("Score: "+stats[0]);
         JLabel check = new JLabel("Checkpoint Counter: "+stats[1]+"/"+controller.getNumCheckpoints());
+        //added through GridBagContraints predefined in View
         statistics.add(n, row(c,row));
         row++;
         statistics.add(s,row(c,row));
         row++;
         statistics.add(check,row(c,row));
 
+        //Panel(s) is/are added to stats panel
         this.statsPanel.add(statistics);
         statsPanel.repaint();
     }
 
     private void initiateStats(){
+        //initiation of statistics panel
         statsPanel = new DisplayPanel();
+        //controller is asked to add relevant stats
         controller.getStats();
         panel.add(statsPanel,BorderLayout.SOUTH);
         panel.repaint();

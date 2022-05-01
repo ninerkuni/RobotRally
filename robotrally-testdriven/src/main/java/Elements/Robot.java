@@ -91,18 +91,12 @@ public class Robot extends Element {
 	}
 	
 
-	
-//	private void hit(int x, int y) {
-//		Element e = board.getElementSpot(x, y);
-//		score += e.effect(score);
-//		
-//		//only takes effect for the conveyer belt
-//		e.move(this,board);
-//		System.out.println(e.message());
-//	}
-	
+
+
+
 	public String hit(Element e) {
 		score += e.effect(score);
+		System.out.println("Element hit"+ e.message());
 		e.move(this);
 		return e.message();
 	}

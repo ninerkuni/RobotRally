@@ -16,11 +16,9 @@ public class Card {
 			switch(this) {
 			case move: return "move";
 			case turnL: return "turnL";
-			case turnR: return "turnR";
-			default: throw new IllegalArgumentException();
+			default: return "turnR";
+			}
 		}
-		
-	};
 	}
 	
 	private List<action> actions;

@@ -94,29 +94,7 @@ public class Player{
 		hand.ordered(b);
 		
 	}
-
-
-	public boolean areOrdered() {
-		return hand.isOrdered();
-	}
-
-//	public void order() {
-//		Card temp;
-//		for(int i = 0; i < hand.numCards();i++) {
-////			System.out.println("Card number "+i);
-//			temp = hand.getCard(i);
-////			temp.printActions();
-//			int position = Prompter.hand(hand,System.in);
-//			hand.setPosition(temp, position);
-//		}
-//		
-//	}
-
-//	public void printHand() {
-//		System.out.println(hand.print());
-//
-//	}
-
+	//returns titles of cards in hand
 	public String[] getTitles() {
 		return hand.getTitles();
 	}

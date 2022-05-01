@@ -16,8 +16,7 @@ import Player.Hand;
 public class GameStart {
     private int obstacles;
     private int checkpoints;
-    private int rows;
-    private int cols;
+
 	private ArrayList<String> names;
     private Board board;
 	private Game game;
@@ -41,16 +40,19 @@ public class GameStart {
     public void setDifficulty(String difficulty) {
     	switch(difficulty) {
     		case ("EASY"):
-    			obstacles = (int) (6 + 6 * Math.random());
-    		    checkpoints = (int) (3 + 2 * Math.random());
+    			obstacles = (int) (6 + 4 * Math.random());
+    		    checkpoints = 3;
+				hardness = "EASY";
     		    break;
     		case ("MEDIUM"):
-    			obstacles = (int) (12 + 6 * Math.random());
-    		    checkpoints = (int) (1 + 2 * Math.random());
+    			obstacles = (int) (8 + 6 * Math.random());
+    		    checkpoints = 3;
+				hardness = "MEDIUM";
     		    break;
     		case ("HARD"):
-    			obstacles = (int) (18 + 6 * Math.random());
-    		    checkpoints = 1;
+    			obstacles = (int) (14 + 6 * Math.random());
+    		    checkpoints = 2;
+				hardness = "HARD";
     		    break;
     	}
     }

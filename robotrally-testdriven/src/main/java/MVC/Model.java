@@ -16,34 +16,27 @@ public class Model {
 	private GameStart start;
 
 	private boolean resume;
-	
-	//constructor for new game
+
+	private boolean single;
+
 	public Model() {
+		//list of robot names is initated (necessary before instances of game or gamestart are initiated)
 		robots = new ArrayList<String>();
-		start = new GameStart();
-		System.out.println("Model initiated");
+//		start = new GameStart();
 	}
-	
-//	public Model(String robotName, String difficulty) {
-//		start.setAmountOfPlayers(1);
-//		start.setDifficulty(difficulty);
-//
-//	}
-//
-//	public Model(String robotName1, String robotName2, String difficulty) {
-//		start.setAmountOfPlayers(2);
-//		start.setDifficulty(difficulty);
-//	}
+
 
 
 
 	public void setDifficulty(String difficulty) {
+		//set difficulty
 		start.setDifficulty(difficulty);
-		
 	}
 
 
 	public void setSingle(boolean b) {
+		//pass information about single-/ multiplayer mode
+		single = b;
 		if(b){
 			start.setAmountOfPlayers(1);
 		}
@@ -54,30 +47,41 @@ public class Model {
 	}
 
 	public ArrayList<String> getRobotNames() {
-		return start.getRobotNames();
+		//return list of robot names
+		return robots;
 	}
 
 	public void robotsAdd(String name) {
+		//adds robots name to list of names
+		robots.add(name);
 		start.addName(name);
 	}
 
 	public boolean getSingle() {
-		if(start.getAmountofPlayers() == 1) return true;
-		else return false;
+		if(resume){
+			return !game.getMultiplayer();
+		}
+		else return (start.getAmountofPlayers() == 1);
 	}
 
 	public boolean allNames() {
+		//checks if enough names have been added to initiate game
 		return (start.getAmountofPlayers() == start.getRobotNames().size());
 	}
 
 	public boolean resumeGame() {
+		//tells if old game is loaded
 		return resume;
 	}
 
 	public int setResumeGame(boolean b) {
+		//stores information about load
 		resume = b;
 		if(b) {
 			return loadGame();
+		}
+		else{
+			start = new GameStart();
 		}
 		return 2;
 	}
@@ -85,15 +89,17 @@ public class Model {
 
 
 	public ArrayList<Element> getElements() {
-//		System.out.println("model.getElements()");
+		//returns all elements in the game
 		return game.getElements();
 	}
 
 	public int getDimensions() {
+		//returns dimensions of the board
 		return game.getBoardDimensions();
 	}
 
 	public int loadGame(){
+		//
 		LoadGame saved = new LoadGame();
 		int error = saved.tryLoad();
 		if(error == 0){
@@ -109,15 +115,6 @@ public class Model {
 		game = start.start();
 	}
 
-//	public void moveRobot() {
-//		System.out.println("model.moveRobot()");
-//		game.moveRobot();
-//	}
-
-//	public void leftRobot(boolean b) {
-//		System.out.println("model.leftRobot()");
-//		game.leftRobot(b);
-//	}
 
 	public String[] getCardTitles() {
 		return game.getCards();

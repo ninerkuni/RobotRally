@@ -215,6 +215,7 @@ public class View {
 		close.addActionListener(
 				e-> {
 					round.dispose();
+
 				}
 		);
 		JButton saveExit = new JButton("Save and Exit");
@@ -226,7 +227,7 @@ public class View {
 				}
 		);
 		JButton Exit = new JButton("Exit");
-		close.addActionListener(
+		Exit.addActionListener(
 				e-> {
 					rally.dispose();
 					round.dispose();
@@ -260,7 +261,9 @@ public class View {
 	public void winner() {
 		JFrame winner = new RallyFrame("Game is finished");
 		winner.setLayout(new GridBagLayout());
-		JPanel winnerPanel = new DisplayPanel();
+		JPanel winnerPanel = new JPanel();
+		winnerPanel.setBackground(new Color(-16143860));
+		winnerPanel.setForeground(Color.WHITE);
 
 		JLabel winningRobot = new JLabel("Congrats "+controller.getWinner()+ ", you won!!");
 

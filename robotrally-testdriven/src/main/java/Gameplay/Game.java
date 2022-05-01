@@ -54,6 +54,11 @@ public class Game {
 		multiplayer = b;
 		
 	}
+	//get multiplayer for loaded game
+	public boolean getMultiplayer(){
+		return multiplayer;
+	}
+
 
 	public String[] getDifficulties() {
 		return difficulties;
@@ -68,13 +73,7 @@ public class Game {
 	public void setBoard(Board b) {
 		board = b;
 	}
-//	public void playGame(){
-//	}
-//
-//
-//	public void setDeck(Deck deck) {
-//		this.deck = deck;
-//	}
+
 	//used in GUI to print the dimensions
 	public int getBoardDimensions() {
 		return board.getDimensions();
